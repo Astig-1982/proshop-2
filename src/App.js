@@ -12,7 +12,7 @@ import HomeScreen from './pages/home-page.component';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App"> 
       <Header />
       <main className='py-3'>
         <Container>
