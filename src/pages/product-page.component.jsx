@@ -61,7 +61,7 @@ const ProductScreen = ({ match }) => {
                             </ListGroup.Item>
 
                             <ListGroup.Item>
-                                <Button className='btn-block add-to-cart' disabled={product.countInStock == 0} type='button'>Add To Cart</Button>            
+                                <Button className='btn-block add-to-cart' disabled={product.countInStock == 0} type='button'>Add To Cart</Button>             
                             </ListGroup.Item>
                         </ListGroup>
                     </Card>
@@ -74,5 +74,7 @@ const ProductScreen = ({ match }) => {
 // <Rating value={product.rating} /> we are simply passing the product.rating as a value props and the Rating component will be display based on that value
 
 // variant='flush' is styling from bootstrap. it takes out the borders.
+
+// disabled={product.countInStock == 0} is boolean. if product.countInStock == 0, than it will be evaluated at True; otherwise, it will be False.
 
 export default ProductScreen
