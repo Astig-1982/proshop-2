@@ -3,7 +3,7 @@ import { Row, Col } from 'react-bootstrap'
 
 import Product from '../components/product.component'
 
-import products from '../products' // this will import 'products' const
+// import products from '../products' // this will import 'products' const
 
 class HomeScreen extends React.Component {
     constructor() {
