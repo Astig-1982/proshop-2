@@ -15,10 +15,10 @@ class HomeScreen extends React.Component {
     };
     
     componentDidMount() {
-        fetch('http://127.0.0.1:8000/api/products')
+        fetch('api/products')
         .then(response => response.json())
         .then(products => this.setState({products: products}))
-      }
+    }
 
     render() {
     return(
