@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Row, Col } from 'react-bootstrap'
 
-import { connect } from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
 
 import Product from '../components/product.component'
@@ -62,84 +62,14 @@ const mapDispatchToProps = dispatch => ({
 export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);
 */
 
-/*
-useEffect(() => {
-        
-        const getProducts  = async () => {
-            const response = await fetch('api/products');
-            const products = await response.json()
-            listProducts(products)
-        }
-
-        getProducts()
-    }, [])
-
-
-
-try {
-    const response = await fetch('api/products');
-            const products = await response.json()
-            listProducts(products)
-    }
-  catch(error) {
-    listProductsError('Error Occurred')
-  }
-
-*/
-
-/*
 
 const HomeScreen = ({ products, errorProducts, listProducts, listProductsError }) => {
+    
     useEffect(() => {
-        
-        const getProducts  = async () => {
-            try {
-                const response = await fetch('ai/products');
-                        const products = await response.json()
-                        listProducts(products)
-                }
-              catch(error) {
-                listProductsError('Error Occurred')
-              }
-        }
-
-        getProducts()
-    }, [])
-    return(
-            <div>
-                <h1>Latest Products</h1>
-                {errorProducts
-                ? <h3>{errorProducts}</h3>
-                : <Row>
-                    {products.map(product => (
-                        <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                            <Product product={product}/>
-                        </Col>
-                    ))}
-                  </Row>
-                }
-            </div>
-        );
-    };
-
-const mapStateToProps = createStructuredSelector({
-   products: listOfProducts,
-   errorProducts: errorProducts
-});
-
-const mapDispatchToProps = dispatch => ({ 
-    listProducts: products => dispatch(listProducts(products)),
-    listProductsError: error => dispatch(listProductsError(error))
-});
-
-export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);
-
-*/
-
-const HomeScreen = ({ products, errorProducts, listProducts, listProductsError }) => {
-    useEffect(() => {
-        
-        const getProducts  = async () => {
+        //check useEffect() at React with Andrei&Yihua hooks
+        const getProducts  = async () => { 
+            // check the async await at React with Andrei&Yihua
+            // check also at JavaScript essential methods notebook
             try {
                 const response = await fetch('api/products');
                         const products = await response.json()
@@ -151,7 +81,7 @@ const HomeScreen = ({ products, errorProducts, listProducts, listProductsError }
         }
 
         getProducts()
-    }, [])
+    }, []) // this empty array means the function within this useEffect will trigger everytime the component is mounted or updated. Once we populate it, the function will be triggered everytime that item (state of the component) in the array changes
     return(
             <div>
                 <h1>Latest Products</h1>
@@ -180,4 +110,44 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);
-                
+
+/*
+
+THE FOLLOWING CODE WILL NOT WORK AS WE WOULD NEED TO ADD MIDDLEWARE TO OUR STORE TO HANDLE DISPATCHING WITH useDispatch() --  LIKE 'redux-thunk'
+
+const HomeScreen = ({ products, errorProducts }) => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(listProducts())
+    }, [dispatch]) 
+    
+    return(
+            <div>
+                <h1>Latest Products</h1>
+                {errorProducts
+                ? <h3>{errorProducts}</h3>
+                : <Row>
+                    {products.map(product => (
+                        <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                            <Product product={product}/>
+                        </Col>
+                    ))}
+                  </Row>
+                }
+            </div>
+        );
+    };
+
+const mapStateToProps = createStructuredSelector({
+   products: listOfProducts,
+   errorProducts: errorProducts
+});
+
+const mapDispatchToProps = dispatch => ({ 
+    listProducts: () => dispatch(listProducts()),
+});
+
+
+export default connect(mapStateToProps,null)(HomeScreen);
+*/                
