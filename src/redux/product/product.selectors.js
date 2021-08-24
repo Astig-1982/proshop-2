@@ -12,3 +12,8 @@ export const errorProducts  = createSelector(
     allStateProducts => allStateProducts.error
 );
 
+export const loadingAllProducts = createSelector(
+    [allProducts], 
+    allStateProducts => allStateProducts.loading
+);
+

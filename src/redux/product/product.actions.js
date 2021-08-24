@@ -8,6 +8,10 @@ export const listProductsError = (error) => ({
     payload: error
 });
 
+export const listProductsRequest = () => ({
+    type: 'PRODUCT_LIST_REQUEST'
+});
+
 /*
 export const listProducts = () => async (dispatch) => {
     try {
