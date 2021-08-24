@@ -5,8 +5,8 @@ import { connect, useDispatch } from 'react-redux'
 import { createStructuredSelector } from 'reselect';
 
 import Product from '../components/product.component'
-import { listProducts, listProductsError } from '../redux/product/product.actions';
-import { errorProducts, listOfProducts } from '../redux/product/product.selectors';
+import { listProducts, listProductsError, listProductsRequest } from '../redux/product/product.actions';
+import { errorProducts, listOfProducts, loadingAllProducts } from '../redux/product/product.selectors';
 
 // import products from '../products' // this will import 'products' const
 
@@ -63,21 +63,22 @@ export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);
 */
 
 
-const HomeScreen = ({ products, errorProducts, listProducts, listProductsError }) => {
-    
+const HomeScreen = ({ products, loading, errorProducts, listProducts, listProductsError, listProductsRequest }) => {
+
     useEffect(() => {
         //check useEffect() at React with Andrei&Yihua hooks
         const getProducts  = async () => { 
             // check the async await at React with Andrei&Yihua
             // check also at JavaScript essential methods notebook
             try {
+                listProductsRequest()
                 const response = await fetch('api/products');
-                        const products = await response.json()
-                        listProducts(products)
+                const products = await response.json()
+                listProducts(products)
                 }
-              catch(error) {
+            catch(error) {
                 listProductsError('Error Occurred')
-              }
+                }
         }
 
         getProducts()
@@ -87,6 +88,8 @@ const HomeScreen = ({ products, errorProducts, listProducts, listProductsError }
                 <h1>Latest Products</h1>
                 {errorProducts
                 ? <h3>{errorProducts}</h3>
+                : loading ?
+                <h3 className='text-lowercase'>loading products...</h3>
                 : <Row>
                     {products.map(product => (
                         <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
@@ -101,12 +104,14 @@ const HomeScreen = ({ products, errorProducts, listProducts, listProductsError }
 
 const mapStateToProps = createStructuredSelector({
    products: listOfProducts,
-   errorProducts: errorProducts
+   errorProducts: errorProducts,
+   loading: loadingAllProducts 
 });
 
 const mapDispatchToProps = dispatch => ({ 
     listProducts: products => dispatch(listProducts(products)),
-    listProductsError: error => dispatch(listProductsError(error))
+    listProductsError: error => dispatch(listProductsError(error)),
+    listProductsRequest: () => dispatch(listProductsRequest())
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen);
